@@ -1,13 +1,15 @@
 package com.proana.model;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,13 +27,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Rol {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Column(nullable = false, unique = true)
-    private String nombre;
+	@Column(nullable = false, unique = true, length = 100)
+	private String nombre;
 
-    @OneToMany(mappedBy = "rol")
-    private List<Usuario> usuarios;
+	@ManyToMany
+	@JoinTable(name = "rol_menu", joinColumns = @JoinColumn(name = "rol_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
+	private Set<Menu> menus;
 }

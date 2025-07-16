@@ -26,7 +26,7 @@
     </properties>
 
     <dependencies>
-        <!-- Spring -->
+        <!-- Spring Boot Starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -75,6 +75,13 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
+        <!-- Compatibilidad Lombok + MapStruct -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>0.2.0</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- MapStruct -->
         <dependency>
@@ -96,7 +103,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Test -->
+        <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -106,7 +113,7 @@
 
     <build>
         <plugins>
-            <!-- Compiler plugin -->
+            <!-- Compiler Plugin con Annotation Processor -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -127,6 +134,27 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+            <!-- Registrar fuentes generadas -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/annotations</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Spring Boot Plugin -->

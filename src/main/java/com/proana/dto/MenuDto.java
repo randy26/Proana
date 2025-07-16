@@ -1,12 +1,16 @@
 package com.proana.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
-@NoArgsConstructor // <-- Requerido para MapStruct
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
+@Accessors(chain = true)
 public class MenuDto {
     private Integer id;
     private String nombre;

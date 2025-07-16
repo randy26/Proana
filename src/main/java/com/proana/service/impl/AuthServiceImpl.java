@@ -1,5 +1,6 @@
 package com.proana.service.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import com.proana.dto.AuthResponseDto;
 import com.proana.dto.LoginRequestDto;
 import com.proana.dto.MenuDto;
 import com.proana.mapper.MenuMapper;
+import com.proana.model.Menu;
 import com.proana.model.Usuario;
 import com.proana.repository.UsuarioRepository;
 import com.proana.service.AuthService;
@@ -32,7 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final MenuMapper menuMapper;
-
+    
     /**
      * Valida las credenciales del usuario.
      *
@@ -46,7 +48,8 @@ public class AuthServiceImpl implements AuthService {
     	Usuario usuario = usuarioRepository.findByUsuario(request.getUsuario())
     	        .orElseThrow(() -> new SecurityException("Usuario no encontrado"));
 
-    	    if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
+    	    //if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {// por el momento se comenta hasta dar de alta un susario se guarde hasheada
+    		if (!request.getPassword().equals(usuario.getPassword())) {
     	        LOGGER.warn("Contraseña inválida para '{}'", request.getUsuario());
     	        throw new SecurityException("Credenciales inválidas");
     	    }
@@ -58,12 +61,31 @@ public class AuthServiceImpl implements AuthService {
     	    return new AuthResponseDto(token, usuario.getUsuario());
     	}
     
-    @Override
-    public Set<MenuDto> getMenusByUsuario(String nombreUsuario) {
-        Usuario usuarioEntity = usuarioRepository.findByUsuario(nombreUsuario)
-            .orElseThrow(() -> new SecurityException("Usuario no encontrado"));
+	    @Override
+	    public Set<MenuDto> getMenusByUsuario(String nombreUsuario) {
+	        Usuario usuarioEntity = usuarioRepository.findByUsuario(nombreUsuario)
+	            .orElseThrow(() -> new SecurityException("Usuario no encontrado"));
 
-        return menuMapper.toDtoSet(usuarioEntity.getRol().getMenus());
-    }
+	        Set<MenuDto> menusDto = new HashSet<>();
+	        
+	        for (Menu menu : usuarioEntity.getMenus()) {
+	            MenuDto dto = new MenuDto();
+	            // Aquí seteas los campos manualmente según tu MenuDto
+	            dto.setId(menu.getId());
+	            dto.setNombre(menu.getNombre());
+	            dto.setUrl(menu.getUrl());
+	            dto.setIcono(menu.getIcono());
+	            // ... otros campos que tenga MenuDto
 
+	            menusDto.add(dto);
+	        }
+	        
+	        return menusDto;
+	    }
+	    /*public Set<MenuDto> getMenusByUsuario(String nombreUsuario) {
+	        Usuario usuarioEntity = usuarioRepository.findByUsuario(nombreUsuario)
+	            .orElseThrow(() -> new SecurityException("Usuario no encontrado"));
+	
+	        return menuMapper.toDtoSet(usuarioEntity.getMenus());
+	    }*/
 }

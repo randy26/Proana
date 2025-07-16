@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 public class Usuario {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

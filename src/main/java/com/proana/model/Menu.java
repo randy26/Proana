@@ -21,8 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Menu {
-
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -30,6 +29,5 @@ public class Menu {
     private String nombre;
 
     private String url;
-
     private String icono;
 }

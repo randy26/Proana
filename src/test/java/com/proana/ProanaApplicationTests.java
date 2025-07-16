@@ -1,4 +1,4 @@
-package com.proana.Proana;
+package com.proana;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

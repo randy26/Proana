@@ -13,7 +13,6 @@ import com.proana.configuration.security.JwtTokenProvider;
 import com.proana.dto.AuthResponseDto;
 import com.proana.dto.LoginRequestDto;
 import com.proana.dto.MenuDto;
-import com.proana.mapper.MenuMapper;
 import com.proana.model.Menu;
 import com.proana.model.Usuario;
 import com.proana.repository.UsuarioRepository;
@@ -33,7 +32,6 @@ public class AuthServiceImpl implements AuthService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final MenuMapper menuMapper;
     
     /**
      * Valida las credenciales del usuario.

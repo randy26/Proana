@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proana.dto.ClienteDto;
 import com.proana.dto.EmpleadoDTO;
 import com.proana.model.Empleado;
 import com.proana.repository.EmpleadoRepository;
@@ -26,9 +25,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     private EmpleadoRepository empleadoRep;
 
     /**
-     * Obtiene la lista completa de Cliente.
+     * Obtiene la lista completa de Empleados.
      * 
-     * @return lista de objetos {@link ClienteDto}
+     * @return lista de objetos {@link EmpleadoDTO}
      * @throws RuntimeException si ocurre un error durante la consulta a la base de datos
      */
     @Override

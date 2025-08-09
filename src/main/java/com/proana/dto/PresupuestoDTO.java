@@ -5,6 +5,7 @@ import java.util.List;
 
 @Data
 public class PresupuestoDTO {
+    private Integer idPresupuesto;
     private String tipoPresupuesto;
     private String nombreCliente;
     private String fecha;

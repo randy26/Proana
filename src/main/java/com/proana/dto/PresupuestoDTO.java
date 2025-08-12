@@ -1,39 +1,38 @@
 package com.proana.dto;
 
-import lombok.Data;
 import java.util.List;
 
-@Data
-public class PresupuestoDTO {
-    private Integer idPresupuesto;
-    private String tipoPresupuesto;
-    private String nombreCliente;
-    private String fecha;
+import lombok.Data;
 
-    private PublicacionDTO publicacion;
+	@Data
+	public class PresupuestoDTO {
+	    private String tipoPresupuesto;
+	    private Integer unidadNegocio;
+	    private Integer bpl;
+	    private String nombreCliente;
+	    private String fecha;
 
-    private String titulo;
-    private String fechaPresupuesto;
-    private String validezPresupuesto;
-    private String fechaAceptacion;
-    private String duracionContrato;
-    private String fechaInicio;
-    private String ordenCompra;
-    private String referencia;
-    private String cliente;
-    private String moneda;
-    private String derivante;
-    private String nroCliente;
-    private String nroClienteDerivante;
-    private String comercial;
-    private String responsableContrato;
-    private String revision;
-    private String contacto;
-    private String emailContacto;
-    private String telefonoContacto;
+	    private PublicacionDTO publicacion;
+	    private String titulo;
+	    private String fechaPresupuesto;
+	    private String validezPresupuesto;
+	    private String fechaAceptacion;
+	    private String duracionContrato;
+	    private String fechaInicio;
+	    private String ordenCompra;
+	    private String referencia;
 
-    private List<ItemDTO> items;
-    private List<ViajeDTO> viajes;
-    private FacturacionDTO facturacion;
+	    private ClienteDto cliente;
+	    private MonedaDto moneda;
+	    private DerivanteDTO derivante;
+	    private String comercial;
+	    private String responsableContrato;
+	    private String revision;
+	    private ContactoDTO contacto;
+
+	    private List<ItemDTO> items;
+	    private List<ViajeDTO> viajes;
+	    private FacturacionDTO facturacion;
+
 }
 

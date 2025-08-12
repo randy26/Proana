@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class UnidadNegocioDto {
 
-	private Integer idMoneda;
+	private Integer idUnidadNegocio;
 	private String nombre;
 }

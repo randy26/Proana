@@ -155,4 +155,8 @@ public class Presupuesto {
     @JoinColumn(name = "idContacto", referencedColumnName = "idContacto")
     private Contacto contacto;
 
+    @OneToOne
+    @JoinColumn(name = "idEstadoPresupuesto")
+    private EstadoPresupuesto estadoPresupuesto;
+
 }

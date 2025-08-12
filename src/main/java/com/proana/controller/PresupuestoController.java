@@ -1,18 +1,22 @@
 package com.proana.controller;
 
-import com.proana.service.PresupuestoService;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.proana.dto.PresupuestoDTO;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.proana.dto.PresupuestoDTO;
+import com.proana.dto.PresupuestoResumenDTO;
+import com.proana.service.PresupuestoService;
 
 @RestController
 @RequestMapping("/api/presupuestos")
@@ -36,9 +40,9 @@ public class PresupuestoController {
      * @throws ResponseStatusException si ocurre un error al recuperar los datos
      */
     @GetMapping("/presupuestos")
-    public List<PresupuestoDTO> getPresupuestos() {
+    public List<PresupuestoResumenDTO> getPresupuestos() {
         try {
-            List<PresupuestoDTO> presupuestos = service.listarPresupuestos();
+            List<PresupuestoResumenDTO> presupuestos = service.listarPresupuestos();
 
             logger.info("presupuestos obtenidas correctamente: {} registros", presupuestos.size());
             return presupuestos;

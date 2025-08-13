@@ -30,6 +30,7 @@ public class PresupuestoController {
 	@PostMapping("/nuevoPresupuesto")
     public ResponseEntity<String> nuevoPresupuesto(@RequestBody PresupuestoDTO presupuesto) {
         System.out.println("📥 Presupuesto recibido: " + presupuesto);
+        service.guardarPresupuesto(presupuesto);
         return ResponseEntity.ok("Presupuesto recibido correctamente.");
     }
 

@@ -86,7 +86,11 @@ public class PresupuestoServiceImpl implements PresupuestoService {
         Presupuesto presupuesto = new Presupuesto();
 
         presupuesto.setUnidadNegocio(mapUnidadNegocio(dto.getUnidadNegocio()));
-        presupuesto.setBpl(dto.getBpl());
+        if(dto.isBpl()) {
+        	presupuesto.setBpl(1);
+        }else {
+        	presupuesto.setBpl(0);
+        }
         presupuesto.setTitulo(dto.getTitulo());
         presupuesto.setFechaPresupuesto(ProanaUtil.parseDateSql(dto.getFechaPresupuesto()));
         presupuesto.setValidezDelPresupuesto(parseInteger(dto.getValidezPresupuesto()));
@@ -108,7 +112,11 @@ public class PresupuestoServiceImpl implements PresupuestoService {
         presupuesto.setContacto(mapContacto(dto.getContacto()));
 
         EstadoPresupuesto estado = new EstadoPresupuesto();
-        estado.setIdEstadoPresupuesto(parseInteger(dto.getFacturacion().getModo()));
+        if(dto.getFacturacion().isModo()) {
+        estado.setIdEstadoPresupuesto(1);
+        }else {
+        	estado.setIdEstadoPresupuesto(0);
+        }
         presupuesto.setEstadoPresupuesto(estado);
 
         // Guardar presupuesto en DB:

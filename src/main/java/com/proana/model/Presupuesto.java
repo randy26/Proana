@@ -1,12 +1,23 @@
 package com.proana.model;
 
-import jakarta.persistence.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 /**
  * Entidad que representa a un presupuesto dentro del sistema.
@@ -158,5 +169,10 @@ public class Presupuesto {
     @OneToOne
     @JoinColumn(name = "idEstadoPresupuesto")
     private EstadoPresupuesto estadoPresupuesto;
-
+    
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Viaje> viajes = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Muestra> muestras = new ArrayList<>();
 }

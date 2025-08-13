@@ -23,46 +23,46 @@ public class Muestra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Muestra")
+    @Column(name = "idMuestra")
     private Integer idMuestra;
 
     @ManyToOne
-    @JoinColumn(name = "id_Presupuesto", nullable = false)
+    @JoinColumn(name = "idPresupuesto", nullable = false)
     private Presupuesto presupuesto;
 
-    @Column(name = "Titulo", length = 100)
+    @Column(name = "titulo", length = 100)
     private String titulo;
 
     @ManyToOne
-    @JoinColumn(name = "id_Referencia_normativa", referencedColumnName = "id_Referencias_Normativas")
+    @JoinColumn(name = "idReferenciaNormativa", referencedColumnName = "idReferenciaNormativa")
     private ReferenciaNormativa referenciaNormativa;
 
     @ManyToOne
-    @JoinColumn(name = "id_Matriz", referencedColumnName = "id_Matriz")
+    @JoinColumn(name = "idMatriz", referencedColumnName = "idMatriz")
     private Matriz matriz;
 
-    @Column(name = "P_E")
+    @Column(name = "pe")
     private Integer pe;
 
-    @Column(name = "Cantidad_veces")
+    @Column(name = "cantidadVeces")
     private Integer cantidadVeces;
 
-    @Column(name = "Frecuencia")
+    @Column(name = "frecuencia")
     private Integer frecuencia;
 
-    @Column(name = "Cantidad_muestras")
+    @Column(name = "cantidadMuestras")
     private Integer cantidadMuestras;
 
-    @Column(name = "OOS")
+    @Column(name = "oos")
     private Boolean oos;
 
-    @Column(name = "ROOS")
+    @Column(name = "roos")
     private Boolean roos;
 
-    @Column(name = "S_Crudos")
+    @Column(name = "sCrudos")
     private Boolean sCrudos;
 
     @ManyToOne
-    @JoinColumn(name = "id_Estado_muestra", referencedColumnName = "id_Estado_Muestra")
+    @JoinColumn(name = "idEstadoMuestra", referencedColumnName = "idEstadoMuestra")
     private EstadoMuestra estadoMuestra;
 }

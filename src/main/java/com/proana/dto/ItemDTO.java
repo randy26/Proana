@@ -7,8 +7,8 @@ import java.util.List;
 public class ItemDTO {
     private int id;
     private String titulo;
-    private String referencia;
-    private String matriz;
+    private Integer referencia;
+    private Integer matriz;
     private int pe;
     private int veces;
     private int frecuencia;

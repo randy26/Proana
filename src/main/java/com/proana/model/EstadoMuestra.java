@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "ABM_Estados_Muestras")
+@Table(name = "abm_estados_muestras")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,9 +12,9 @@ import lombok.*;
 public class EstadoMuestra {
 
     @Id
-    @Column(name = "id_Estado_Muestra")
+    @Column(name = "idEstadoMuestra")
     private Integer id;
 
-    @Column(name = "Nombre", length = 50)
+    @Column(name = "nombre", length = 50)
     private String nombre;
 }

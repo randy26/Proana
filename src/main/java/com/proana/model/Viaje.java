@@ -13,28 +13,28 @@ public class Viaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Viaje")
+    @Column(name = "idViaje")
     private Integer idViaje;
 
     @ManyToOne
-    @JoinColumn(name = "id_Presupuesto", nullable = false)
+    @JoinColumn(name = "idPresupuesto", nullable = false)
     private Presupuesto presupuesto;
 
-    @Column(name = "Ubicacion", length = 100)
+    @Column(name = "ubicacion", length = 100)
     private String ubicacion;
 
-    @Column(name = "Costo_Viatico_Por_Viaje")
+    @Column(name = "costoViaticoPorViaje")
     private Integer costoViaticoPorViaje;
 
-    @Column(name = "Cantidad_Viajes")
+    @Column(name = "cantidadViajes")
     private Integer cantidadViajes;
 
-    @Column(name = "Traslado")
+    @Column(name = "traslado")
     private Integer traslado;
 
-    @Column(name = "Alojamiento")
+    @Column(name = "alojamiento")
     private Integer alojamiento;
 
-    @Column(name = "Viaticos")
+    @Column(name = "viaticos")
     private Integer viaticos;
 }

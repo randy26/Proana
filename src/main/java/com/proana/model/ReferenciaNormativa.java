@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "ABM_Referencias_Normativas")
+@Table(name = "abm_referencias_normativas")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,12 +12,12 @@ import lombok.*;
 public class ReferenciaNormativa {
 
     @Id
-    @Column(name = "id_Referencias_Normativas")
+    @Column(name = "idReferenciaNormativa")
     private Integer id;
 
-    @Column(name = "Nombre", length = 100)
+    @Column(name = "nombre", length = 100)
     private String nombre;
 
-    @Column(name = "Observacion", length = 255)
+    @Column(name = "observacion", length = 255)
     private String observacion;
 }

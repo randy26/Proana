@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "ABM_Matrices")
+@Table(name = "abm_matrices")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,10 +12,10 @@ import lombok.*;
 public class Matriz {
 
     @Id
-    @Column(name = "id_Matriz")
+    @Column(name = "idMatriz")
     private Integer id;
 
-    @Column(name = "Nombre", length = 50)
+    @Column(name = "nombre", length = 50)
     private String nombre;
 }
 

@@ -7,5 +7,5 @@ public class FacturacionDTO {
     private boolean finContrato;
     private EntreFechasDTO entreFechasEntrada;
     private EntreFechasDTO terminadasEntreFechas;
-    private String modo;
+    private boolean modo;
 }

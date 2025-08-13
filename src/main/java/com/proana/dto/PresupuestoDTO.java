@@ -8,7 +8,7 @@ import lombok.Data;
 	public class PresupuestoDTO {
 	    private String tipoPresupuesto;
 	    private Integer unidadNegocio;
-	    private Integer bpl;
+	    private boolean bpl;
 	    private String nombreCliente;
 	    private String fecha;
 

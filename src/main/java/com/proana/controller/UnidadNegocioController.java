@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.proana.dto.UnidadNegocioDto;
+import com.proana.dto.UnidadNegocioDTO;
 import com.proana.service.UnidadNegocioService;
 
 /**
@@ -31,13 +31,13 @@ public class UnidadNegocioController {
     /**
      * Endpoint que devuelve la lista de unidades de negocio disponibles.
      *
-     * @return Lista de {@link UnidadNegocioDto}
+     * @return Lista de {@link UnidadNegocioDTO}
      * @throws ResponseStatusException si ocurre un error al recuperar los datos
      */
     @GetMapping("/unidadesNegocio")
-    public List<UnidadNegocioDto> getUnidades() {
+    public List<UnidadNegocioDTO> getUnidades() {
         try {
-            List<UnidadNegocioDto> unidades = service.listarUnidades();
+            List<UnidadNegocioDTO> unidades = service.listarUnidades();
             logger.info("Unidades de negocio obtenidas correctamente: {} registros", unidades.size());
             return unidades;
         } catch (Exception e) {

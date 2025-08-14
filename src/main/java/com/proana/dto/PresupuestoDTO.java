@@ -23,7 +23,7 @@ import lombok.Data;
 	    private String referencia;
 
 	    private ClienteDto cliente;
-	    private MonedaDto moneda;
+	    private MonedaDTO moneda;
 	    private DerivanteDTO derivante;
 	    private String comercial;
 	    private String responsableContrato;

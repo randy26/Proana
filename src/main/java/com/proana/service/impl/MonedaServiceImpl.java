@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proana.dto.MonedaDto;
+import com.proana.dto.MonedaDTO;
 import com.proana.model.Moneda;
 import com.proana.repository.MonedaRepository;
 import com.proana.service.MonedaService;
@@ -27,16 +27,16 @@ public class MonedaServiceImpl implements MonedaService {
     /**
      * Obtiene la lista completa de Moneda.
      * 
-     * @return lista de objetos {@link MonedaDto}
+     * @return lista de objetos {@link MonedaDTO}
      * @throws RuntimeException si ocurre un error durante la consulta a la base de datos
      */
     @Override
-    public List<MonedaDto> listarMonedas() {
+    public List<MonedaDTO> listarMonedas() {
         try {
             logger.info("Inicio de la obtención de unidades de negocio");
             List<Moneda> entidades = this.monedaRep.findAll();
-            List<MonedaDto> dtos = entidades.stream()
-                .map(ent -> new MonedaDto(ent.getIdMoneda(), ent.getNombre()))
+            List<MonedaDTO> dtos = entidades.stream()
+                .map(ent -> new MonedaDTO(ent.getIdMoneda(), ent.getNombre()))
                 .toList();
             logger.info("Se obtuvieron {} Monedas", dtos.size());
             return dtos;

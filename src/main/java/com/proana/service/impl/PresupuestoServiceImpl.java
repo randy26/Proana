@@ -12,7 +12,7 @@ import com.proana.dto.ClienteDto;
 import com.proana.dto.ContactoDTO;
 import com.proana.dto.DerivanteDTO;
 import com.proana.dto.ItemDTO;
-import com.proana.dto.MonedaDto;
+import com.proana.dto.MonedaDTO;
 import com.proana.dto.PresupuestoDTO;
 import com.proana.dto.PresupuestoResumenDTO;
 import com.proana.dto.ViajeDTO;
@@ -21,7 +21,6 @@ import com.proana.model.Cliente;
 import com.proana.model.Contacto;
 import com.proana.model.Derivante;
 import com.proana.model.Empleado;
-import com.proana.model.EstadoMuestra;
 import com.proana.model.EstadoPresupuesto;
 import com.proana.model.Matriz;
 import com.proana.model.Moneda;
@@ -151,7 +150,7 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		return cliente;
 	}
 
-	private Moneda mapMoneda(final MonedaDto monedaDto) {
+	private Moneda mapMoneda(final MonedaDTO monedaDto) {
 		Moneda moneda = new Moneda();
 		if (monedaDto != null && monedaDto.getIdMoneda() != null) {
 			moneda.setIdMoneda(monedaDto.getIdMoneda());

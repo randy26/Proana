@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.proana.dto.MonedaDto;
-import com.proana.dto.UnidadNegocioDto;
+import com.proana.dto.MonedaDTO;
+import com.proana.dto.UnidadNegocioDTO;
 import com.proana.service.MonedaService;
 
 /**
@@ -31,13 +31,13 @@ public class MonedaController {
     /**
      * Endpoint que devuelve la lista de unidades de negocio disponibles.
      *
-     * @return Lista de {@link UnidadNegocioDto}
+     * @return Lista de {@link UnidadNegocioDTO}
      * @throws ResponseStatusException si ocurre un error al recuperar los datos
      */
     @GetMapping("/listMonedas")
-    public List<MonedaDto> getUnidades() {
+    public List<MonedaDTO> getUnidades() {
         try {
-            List<MonedaDto> monedas = service.listarMonedas();
+            List<MonedaDTO> monedas = service.listarMonedas();
             logger.info("monedas obtenidas correctamente: {} registros", monedas.size());
             return monedas;
         } catch (Exception e) {

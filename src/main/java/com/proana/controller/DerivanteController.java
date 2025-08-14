@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.proana.dto.ClienteDto;
-import com.proana.dto.UnidadNegocioDto;
 import com.proana.service.ClienteService;
 
 /**

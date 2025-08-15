@@ -33,7 +33,7 @@ public class MuestreoController {
      * @return Lista de {@link MuestreoDTO}
      * @throws ResponseStatusException si ocurre un error al recuperar los datos
      */
-    @GetMapping("/listMuestreos")
+    @GetMapping("/listarMuestreos")
     public List<MuestreoDTO> getMuestreos() {
         try {
             List<MuestreoDTO> Muestreos = service.listarMuestreos();

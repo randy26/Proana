@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MonedaDto {
 
-	private Integer idMoneda;
-	private String nombre;
+    private Integer idMoneda;
+    private String nombre;
 }

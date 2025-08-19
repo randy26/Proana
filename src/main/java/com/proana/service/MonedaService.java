@@ -2,8 +2,8 @@ package com.proana.service;
 
 import java.util.List;
 
-import com.proana.dto.MonedaDTO;
+import com.proana.dto.MonedaDto;
 
 public interface MonedaService {
-	List<MonedaDTO> listarMonedas();
+	List<MonedaDto> listarMonedas();
 }

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proana.dto.UnidadNegocioDTO;
+import com.proana.dto.UnidadNegocioDto;
 import com.proana.model.UnidadNegocio;
 import com.proana.repository.UnidadNegocioRepository;
 import com.proana.service.UnidadNegocioService;
@@ -28,16 +28,16 @@ public class UnidadNegocioServiceImpl implements UnidadNegocioService {
     /**
      * Obtiene la lista completa de Unidades de Negocio.
      * 
-     * @return lista de objetos {@link UnidadNegocioDTO}
+     * @return lista de objetos {@link UnidadNegocioDto}
      * @throws RuntimeException si ocurre un error durante la consulta a la base de datos
      */
     @Override
-    public List<UnidadNegocioDTO> listarUnidades() {
+    public List<UnidadNegocioDto> listarUnidades() {
         try {
             logger.info("Inicio de la obtención de unidades de negocio");
             List<UnidadNegocio> entidades = this.unidadNegocioRep.findAll();
-            List<UnidadNegocioDTO> dtos = entidades.stream()
-                .map(ent -> new UnidadNegocioDTO(ent.getIdUnidadNegocio(), ent.getNombre()))
+            List<UnidadNegocioDto> dtos = entidades.stream()
+                .map(ent -> new UnidadNegocioDto(ent.getIdUnidadNegocio(), ent.getNombre()))
                 .toList();
             logger.info("Se obtuvieron {} unidades de negocio", dtos.size());
             return dtos;

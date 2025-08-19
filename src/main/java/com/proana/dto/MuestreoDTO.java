@@ -1,6 +1,5 @@
 package com.proana.dto;
 
-import com.proana.model.Muestra;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,7 @@ import java.sql.Date;
 public class MuestreoDTO {
 
     private Integer idMuestreo;
-    private Muestra muestra;
+    private ItemDTO muestra;
     private String ubicacion;
     private Date fechaEstimada;
     private Integer cantidadMinima;

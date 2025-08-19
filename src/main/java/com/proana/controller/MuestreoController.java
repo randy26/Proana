@@ -1,7 +1,6 @@
 package com.proana.controller;
 
 import com.proana.dto.MuestreoDTO;
-import com.proana.dto.UnidadNegocioDTO;
 import com.proana.service.MuestreoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

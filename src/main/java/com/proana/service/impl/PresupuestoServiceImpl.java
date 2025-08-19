@@ -11,15 +11,22 @@ import org.springframework.stereotype.Service;
 import com.proana.dto.ClienteDto;
 import com.proana.dto.ContactoDTO;
 import com.proana.dto.DerivanteDTO;
+import com.proana.dto.EmpleadoDTO;
 import com.proana.dto.ItemDTO;
 import com.proana.dto.MonedaDto;
 import com.proana.dto.PresupuestoDTO;
 import com.proana.dto.PresupuestoResumenDTO;
+import com.proana.dto.UnidadNegocioDto;
 import com.proana.dto.ViajeDTO;
 import com.proana.exception.EntidadNoEncontradaException;
+import com.proana.model.AbmDeterminacion;
+import com.proana.model.AbmEstadoDeterminaciones;
+import com.proana.model.AbmFti;
+import com.proana.model.AbmUnidadDeterminacion;
 import com.proana.model.Cliente;
 import com.proana.model.Contacto;
 import com.proana.model.Derivante;
+import com.proana.model.Determinacion;
 import com.proana.model.Empleado;
 import com.proana.model.EstadoMuestra;
 import com.proana.model.EstadoPresupuesto;
@@ -35,6 +42,8 @@ import com.proana.repository.UnidadNegocioRepository;
 import com.proana.service.PresupuestoService;
 import com.proana.utils.ProanaUtil;
 import com.proana.utils.TypeConverter;
+
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * Implementación del servicio para operaciones sobre Presupuestos.
@@ -90,9 +99,9 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 
 		presupuesto.setUnidadNegocio(mapUnidadNegocio(dto.getUnidadNegocio()));
 		if (dto.isBpl()) {
-			presupuesto.setBpl(1);
-		} else {
 			presupuesto.setBpl(0);
+		} else {
+			presupuesto.setBpl(1);
 		}
 		presupuesto.setTitulo(dto.getTitulo());
 		presupuesto.setFechaPresupuesto(ProanaUtil.parseDateSql(dto.getFechaPresupuesto()));
@@ -107,8 +116,8 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		presupuesto.setMoneda(mapMoneda(dto.getMoneda()));
 		presupuesto.setDerivante(mapDerivante(dto.getDerivante()));
 
-		presupuesto.setComercial(mapEmpleado(dto.getComercial(), "Comercial"));
-		presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato(), "Responsable del Contrato"));
+		//presupuesto.setComercial(mapEmpleado(dto.getComercial(), "Comercial"));
+		//presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato(), "Responsable del Contrato"));
 
 		presupuesto.setRevision(parseInteger(dto.getRevision()));
 
@@ -118,7 +127,7 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		if (dto.getFacturacion().isModo()) {
 			estado.setIdEstadoPresupuesto(1);
 		} else {
-			estado.setIdEstadoPresupuesto(0);
+			estado.setIdEstadoPresupuesto(2);
 		}
 		presupuesto.setEstadoPresupuesto(estado);
 		//Mapear viajes
@@ -127,19 +136,58 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	    presupuesto.setMuestras(mapMuestras(dto.getItems(), presupuesto));
 		presupuestoRep.save(presupuesto);
 	}
+	
 
-	private UnidadNegocio mapUnidadNegocio(Integer unidadNegocioIdStr) {
-		if (unidadNegocioIdStr == null) {
-			throw new IllegalArgumentException("Unidad de negocio es obligatoria");
+	@Override
+	public void actualizarPresupuesto(Integer id, PresupuestoDTO dto) {
+		Presupuesto presupuesto = presupuestoRep.findById(id).
+				orElseThrow(() -> new EntityNotFoundException("Presupuesto con ID " + id + " no encontrado"));
+		presupuesto.setUnidadNegocio(mapUnidadNegocio(dto.getUnidadNegocio()));
+		if (dto.isBpl()) {
+			presupuesto.setBpl(0);
+		} else {
+			presupuesto.setBpl(1);
 		}
-		Integer id;
-		try {
-			id = Integer.valueOf(unidadNegocioIdStr);
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException("Unidad de negocio inválida: " + unidadNegocioIdStr);
+		presupuesto.setTitulo(dto.getTitulo());
+		presupuesto.setFechaPresupuesto(ProanaUtil.parseDateSql(dto.getFechaPresupuesto()));
+		presupuesto.setValidezDelPresupuesto(parseInteger(dto.getValidezPresupuesto()));
+		presupuesto.setFechaAceptacion(ProanaUtil.parseDateSql(dto.getFechaAceptacion()));
+		presupuesto.setDuracionDelContrato(parseInteger(dto.getDuracionContrato()));
+		presupuesto.setFechaInicio(ProanaUtil.parseDateSql(dto.getFechaInicio()));
+		presupuesto.setOrdenDeCompra(dto.getOrdenCompra());
+		presupuesto.setReferencia(dto.getReferencia());
+
+		presupuesto.setCliente(mapCliente(dto.getCliente()));
+		presupuesto.setMoneda(mapMoneda(dto.getMoneda()));
+		presupuesto.setDerivante(mapDerivante(dto.getDerivante()));
+
+		//presupuesto.setComercial(mapEmpleado(dto.getComercial(), "Comercial"));
+		//presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato(), "Responsable del Contrato"));
+
+		presupuesto.setRevision(parseInteger(dto.getRevision()));
+
+		presupuesto.setContacto(mapContacto(dto.getContacto()));
+
+		EstadoPresupuesto estado = new EstadoPresupuesto();
+		if (dto.getFacturacion().isModo()) {
+			estado.setIdEstadoPresupuesto(1);
+		} else {
+			estado.setIdEstadoPresupuesto(2);
 		}
-		return unidadNegocioRep.findById(id)
-				.orElseThrow(() -> new EntidadNoEncontradaException("Unidad de negocio no encontrada con id: " + id));
+		presupuesto.setEstadoPresupuesto(estado);
+		//Mapear viajes
+		presupuesto.setViajes(mapViajes(dto.getViajes(), presupuesto));
+		// Mapear muestras
+	    presupuesto.setMuestras(mapMuestras(dto.getItems(), presupuesto));
+	}
+
+	private UnidadNegocio mapUnidadNegocio(UnidadNegocioDto unidadNegocioDto) {
+		if (unidadNegocioDto == null || unidadNegocioDto.getIdUnidadNegocio() == null) {
+			throw new IllegalArgumentException("Cliente es obligatorio");
+		}
+		UnidadNegocio unidadNegocio = new UnidadNegocio();
+		unidadNegocio.setIdUnidadNegocio(unidadNegocioDto.getIdUnidadNegocio());
+		return unidadNegocio;
 	}
 
 	private Cliente mapCliente(final ClienteDto clienteDto) {
@@ -251,14 +299,154 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	        muestra.setSCrudos(muestraDto.isSCrudos());
 
 	        // Relacionar estado muestra
-	       /* if (muestraDto.getEstadoMuestraId() != null) {
+	       if (muestraDto != null) {
 	            EstadoMuestra estado = new EstadoMuestra();
-	            estado.setIdEstadoMuestra(muestraDto.getEstadoMuestraId());
+	            //estado.setIdEstadoMuestra(muestraDto.get); //falta el parametro
 	            muestra.setEstadoMuestra(estado);
-	        }*/
-
+	        }
 	        muestra.setPresupuesto(presupuesto);
+
+	        // 🔗 Mapear determinaciones de la muestra
+	        if (muestraDto.getDeterminaciones() != null && !muestraDto.getDeterminaciones().isEmpty()) {
+	            List<Determinacion> determinaciones = muestraDto.getDeterminaciones().stream()
+	                    .map(detDto -> {
+	                        Determinacion det = new Determinacion();
+	                        det.setEspecificacion(detDto.getEspecificacion());
+	                        det.setLimite(detDto.getLimite());
+	                        det.setInforma(detDto.getInforma());
+	                        det.setCondicionantes(detDto.getCondicionantes());
+	                        det.setDtoCantidad(detDto.getDtoCantidad());
+	                        det.setDtoArbitrario(detDto.getDtoArbitrario());
+	                        det.setDtoCliente(detDto.getDtoCliente());
+	                        det.setDtoPorcentaje(detDto.getDtoPorcentaje());
+	                        det.setPrecioLista(detDto.getPrecioLista());
+	                        det.setPrecioFinal(detDto.getPrecioFinal());
+	                        det.setCrudos(detDto.getCrudos());
+	                        det.setDerivado(detDto.getDerivado());
+	                        det.setResultado(detDto.getResultado());
+	                        det.setReferencia(detDto.getReferencia());
+	                        det.setDatosCrudos(detDto.getDatosCrudos());
+
+	                        // Relaciones con otras tablas
+	                        if (detDto.getIdDeterminacion() != null) {
+	                            AbmDeterminacion determinacion = new AbmDeterminacion();
+	                            determinacion.setIdDeterminacion(detDto.getIdDeterminacion());
+	                            det.setDeterminacion(determinacion);
+	                        }
+	                        if (detDto.getIdUnidadDeterminacion() != null) {
+	                            AbmUnidadDeterminacion unidad = new AbmUnidadDeterminacion();
+	                            unidad.setIdUnidadDeterminacion(detDto.getIdUnidadDeterminacion());
+	                            det.setUnidadDeterminacion(unidad);
+	                        }
+	                        if (detDto.getIdFti() != null) {
+	                            AbmFti fti = new AbmFti();
+	                            fti.setIdFti(detDto.getIdFti());
+	                            det.setFti(fti);
+	                        }
+	                        if (detDto.getIdEstadoDeterminacion() != null) {
+	                            AbmEstadoDeterminaciones estadoDet = new AbmEstadoDeterminaciones();
+	                            estadoDet.setIdEstadoDeterminacion(detDto.getIdEstadoDeterminacion());
+	                            det.setEstadoDeterminacion(estadoDet);
+	                        }
+
+	                        // Relación inversa (FK)
+	                        det.setMuestra(muestra);
+
+	                        return det;
+	                    })
+	                    .toList();
+
+	            muestra.setDeterminaciones(determinaciones);
+	        }
+	        
 	        return muestra;
 	    }).toList();
 	}
+
+	@Override
+    public PresupuestoDTO obtenerPresupuestoPorId(final Integer id) {
+        Presupuesto presupuesto = this.presupuestoRep.findById(id).orElse(null);
+        if (presupuesto == null) {
+            return null;
+        }
+
+        PresupuestoDTO dto = new PresupuestoDTO();
+        dto.setBpl(presupuesto.getBpl() != null && presupuesto.getBpl() == 1);
+        dto.setTitulo(presupuesto.getTitulo());
+        dto.setFechaPresupuesto(ProanaUtil.formatDate(presupuesto.getFechaPresupuesto()));
+        dto.setValidezPresupuesto(presupuesto.getValidezDelPresupuesto() != null ? presupuesto.getValidezDelPresupuesto().toString() : null);
+        dto.setFechaAceptacion(ProanaUtil.formatDate(presupuesto.getFechaAceptacion()));
+        dto.setDuracionContrato(presupuesto.getDuracionDelContrato() != null ? presupuesto.getDuracionDelContrato().toString() : null);
+        dto.setFechaInicio(ProanaUtil.formatDate(presupuesto.getFechaInicio()));
+        dto.setOrdenCompra(presupuesto.getOrdenDeCompra());
+        dto.setReferencia(presupuesto.getReferencia());
+        dto.setRevision(presupuesto.getRevision() != null ? presupuesto.getRevision().toString() : null);
+
+        //Unidad de negocio
+        if (presupuesto.getUnidadNegocio() != null) {
+        	UnidadNegocioDto unidadNegocioDto = new UnidadNegocioDto();
+        	unidadNegocioDto.setIdUnidadNegocio(presupuesto.getUnidadNegocio().getIdUnidadNegocio());    
+        	dto.setUnidadNegocio(unidadNegocioDto);
+        }
+        // Cliente
+        if (presupuesto.getCliente() != null) {
+            ClienteDto clienteDto = new ClienteDto();
+            clienteDto.setIdCliente(presupuesto.getCliente().getIdCliente());
+            dto.setCliente(clienteDto);
+        }
+
+        // Moneda
+        if (presupuesto.getMoneda() != null) {
+            MonedaDto monedaDto = new MonedaDto();
+            monedaDto.setIdMoneda(presupuesto.getMoneda().getIdMoneda());
+            monedaDto.setNombre(presupuesto.getMoneda().getNombre());
+            dto.setMoneda(monedaDto);
+        }
+
+        // Derivante
+        if (presupuesto.getDerivante() != null) {
+            DerivanteDTO derivanteDto = new DerivanteDTO();
+            derivanteDto.setIdDerivante(presupuesto.getDerivante().getIdDerivante());
+            dto.setDerivante(derivanteDto);
+        }
+
+        // Comercial
+        if (presupuesto.getComercial() != null) {
+        	EmpleadoDTO empleadoDto = new EmpleadoDTO();
+        	empleadoDto.setIdEmpleado(presupuesto.getComercial().getIdEmpleado());
+            dto.setComercial(empleadoDto);
+        }
+
+        // Responsable contrato
+        if (presupuesto.getResponsableContrato() != null) {
+        	EmpleadoDTO empleadoDto = new EmpleadoDTO();
+        	empleadoDto.setIdEmpleado(presupuesto.getResponsableContrato().getIdEmpleado());
+            dto.setResponsableContrato(empleadoDto);
+        }
+
+        // Contacto
+        if (presupuesto.getContacto() != null) {
+            ContactoDTO contactoDto = new ContactoDTO();
+            contactoDto.setIdContacto(presupuesto.getContacto().getIdContacto());
+            contactoDto.setNombre(presupuesto.getContacto().getNombre());
+            contactoDto.setEmail(presupuesto.getContacto().getEmail());
+            dto.setContacto(contactoDto);
+        }
+
+        // Viajes
+       /* if (presupuesto.getViajes() != null) {
+            dto.setViajes(
+                presupuesto.getViajes().stream().map(v -> {
+                    ViajeDTO vDto = new ViajeDTO();
+                    vDto.setIdViaje(v.getIdViaje());
+                    vDto.setDescripcion(v.getDescripcion());
+                    return vDto;
+                }).collect(Collectors.toList())
+            );
+        }*/
+
+        return dto;
+    }
+
+
 }

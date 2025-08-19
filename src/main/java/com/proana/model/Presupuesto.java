@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -145,17 +146,14 @@ public class Presupuesto {
     @JoinColumn(name = "idDerivante", referencedColumnName = "idDerivante")
     private Derivante derivante;
 
-    /**
-     * Comercial del presupuesto.
-     */
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idComercial", referencedColumnName = "idEmpleado")
     private Empleado comercial;
 
     /**
      * Responsable del Contrato del presupuesto.
      */
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idResponsableDelContrato", referencedColumnName = "idEmpleado")
     private Empleado responsableContrato;
 

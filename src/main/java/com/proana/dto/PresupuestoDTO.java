@@ -7,7 +7,7 @@ import lombok.Data;
 	@Data
 	public class PresupuestoDTO {
 	    private String tipoPresupuesto;
-	    private Integer unidadNegocio;
+	    private UnidadNegocioDto unidadNegocio;
 	    private boolean bpl;
 	    private String nombreCliente;
 	    private String fecha;
@@ -25,11 +25,10 @@ import lombok.Data;
 	    private ClienteDto cliente;
 	    private MonedaDto moneda;
 	    private DerivanteDTO derivante;
-	    private String comercial;
-	    private String responsableContrato;
+	    private EmpleadoDTO comercial;
+	    private EmpleadoDTO responsableContrato;
 	    private String revision;
 	    private ContactoDTO contacto;
-
 	    private List<ItemDTO> items;
 	    private List<ViajeDTO> viajes;
 	    private FacturacionDTO facturacion;

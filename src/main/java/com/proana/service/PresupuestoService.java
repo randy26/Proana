@@ -8,4 +8,6 @@ import com.proana.dto.PresupuestoResumenDTO;
 public interface PresupuestoService {
     List<PresupuestoResumenDTO> listarPresupuestos();
     void guardarPresupuesto(PresupuestoDTO dto);
+    PresupuestoDTO obtenerPresupuestoPorId(Integer id);
+    void actualizarPresupuesto(Integer id, PresupuestoDTO data);
 }

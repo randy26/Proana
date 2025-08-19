@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,4 +58,37 @@ public class PresupuestoController {
             );
         }
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<PresupuestoDTO> getPresupuestoPorId(@PathVariable Integer id) {
+        try {
+            PresupuestoDTO presupuesto = service.obtenerPresupuestoPorId(id);
+
+            if (presupuesto == null) {
+                logger.warn("Presupuesto con id {} no encontrado", id);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                     .body(null);
+            }
+
+            logger.info("Presupuesto {} obtenido correctamente", id);
+            return ResponseEntity.ok(presupuesto);
+        } catch (Exception e) {
+            logger.error("Error al obtener presupuesto con id {}", id, e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Ocurrió un error al obtener el presupuesto.",
+                    e
+            );
+        }
+    }
+    
+   /* @PutMapping("/presupuestos/{id}")
+    public ResponseEntity<PresupuestoDTO> actualizarPresupuesto(
+            @PathVariable Long id,
+            @RequestBody PresupuestoDTO presupuestoDTO) {
+        PresupuestoDTO actualizado = service.actualizarPresupuesto(id, presupuestoDTO);
+        return ResponseEntity.ok(actualizado);*/
+    //}
+
+    
 }

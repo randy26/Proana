@@ -1,18 +1,42 @@
 package com.proana.dto;
 
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class DeterminacionDTO {
-    private String nombre;
-    private String metodo;
-    private boolean informa;
-    private boolean condicionantes;
-    private String dtoQ;
-    private String dtoC;
-    private String dtoP;
-    private String lista;
-    private String final_;
-    private boolean sCrudos;
-}
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class DeterminacionDTO implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer idDeterminacionPresupuesto;
+	private Integer idMuestra;
+	private Integer idDeterminacion;
+	private String especificacion;
+	private String limite;
+	private Boolean informa;
+	private String condicionantes;
+	private Float dtoCantidad;
+	private Float dtoArbitrario;
+	private Float dtoCliente;
+	private Float dtoPorcentaje;
+	private Float precioLista;
+	private Float precioFinal;
+	private Boolean crudos;
+	private Boolean derivado;
+	private String resultado;
+	private String referencia;
+	private Integer idUnidadDeterminacion;
+	private String datosCrudos;
+	private Integer idFti;
+	private Integer idEstadoDeterminacion;
+
+}

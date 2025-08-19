@@ -7,6 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class MonedaDTO {
 
-	private Integer idMoneda;
-	private String nombre;
 }

@@ -116,8 +116,8 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		presupuesto.setMoneda(mapMoneda(dto.getMoneda()));
 		presupuesto.setDerivante(mapDerivante(dto.getDerivante()));
 
-		//presupuesto.setComercial(mapEmpleado(dto.getComercial(), "Comercial"));
-		//presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato(), "Responsable del Contrato"));
+		presupuesto.setComercial(mapEmpleado(dto.getComercial().getIdEmpleado(), "Comercial"));
+		presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato().getIdEmpleado(), "Responsable del Contrato"));
 
 		presupuesto.setRevision(parseInteger(dto.getRevision()));
 
@@ -161,8 +161,8 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		presupuesto.setMoneda(mapMoneda(dto.getMoneda()));
 		presupuesto.setDerivante(mapDerivante(dto.getDerivante()));
 
-		//presupuesto.setComercial(mapEmpleado(dto.getComercial(), "Comercial"));
-		//presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato(), "Responsable del Contrato"));
+		presupuesto.setComercial(mapEmpleado(dto.getComercial().getIdEmpleado(), "Comercial"));
+		presupuesto.setResponsableContrato(mapEmpleado(dto.getResponsableContrato().getIdEmpleado(), "Responsable del Contrato"));
 
 		presupuesto.setRevision(parseInteger(dto.getRevision()));
 
@@ -216,8 +216,8 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		return derivante;
 	}
 
-	private Empleado mapEmpleado(final String empleadoIdStr, final String campo) {
-		if (empleadoIdStr == null || empleadoIdStr.isEmpty()) {
+	private Empleado mapEmpleado(final Integer empleadoIdStr, final String campo) {
+		if (empleadoIdStr == null) {
 			return null;
 		}
 		try {
@@ -301,7 +301,7 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	        // Relacionar estado muestra
 	       if (muestraDto != null) {
 	            EstadoMuestra estado = new EstadoMuestra();
-	            //estado.setIdEstadoMuestra(muestraDto.get); //falta el parametro
+	            estado.setId(1); // se genera un id que sea en proceso para hacer pruebas hasta que se defina las reglas de negocio
 	            muestra.setEstadoMuestra(estado);
 	        }
 	        muestra.setPresupuesto(presupuesto);
@@ -322,10 +322,9 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	                        det.setPrecioLista(detDto.getPrecioLista());
 	                        det.setPrecioFinal(detDto.getPrecioFinal());
 	                        det.setCrudos(detDto.getCrudos());
-	                        det.setDerivado(detDto.getDerivado());
 	                        det.setResultado(detDto.getResultado());
 	                        det.setReferencia(detDto.getReferencia());
-	                        det.setDatosCrudos(detDto.getDatosCrudos());
+	                        det.setDerivado(detDto.getDatosCrudos());
 
 	                        // Relaciones con otras tablas
 	                        if (detDto.getIdDeterminacion() != null) {

@@ -28,6 +28,7 @@ import com.proana.model.Contacto;
 import com.proana.model.Derivante;
 import com.proana.model.Determinacion;
 import com.proana.model.Empleado;
+import com.proana.model.EstadoMuestra;
 import com.proana.model.EstadoPresupuesto;
 import com.proana.model.Matriz;
 import com.proana.model.Moneda;

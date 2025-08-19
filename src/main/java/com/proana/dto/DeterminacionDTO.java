@@ -35,7 +35,7 @@ public class DeterminacionDTO implements Serializable {
 	private String resultado;
 	private String referencia;
 	private Integer idUnidadDeterminacion;
-	private String datosCrudos;
+	private Boolean datosCrudos;
 	private Integer idFti;
 	private Integer idEstadoDeterminacion;
 

@@ -1,16 +1,20 @@
 package com.proana.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
+/**
+ * Entidad que representa un muestreo realizado sobre una muestra.
+ * Cada muestreo contiene información sobre la ubicación,
+ * la fecha estimada, cantidad mínima requerida, unidad de medida,
+ * muestreadores, consumibles utilizados y el precio del muestreo.
+ */
 @Entity
 @Table(name = "muestreos")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,7 +25,10 @@ public class Muestreo {
     @Column(name = "idMuestreo")
     private Integer idMuestreo;
 
-    @ManyToOne
+    /**
+     * Relación muchos-a-uno con la muestra a la que pertenece este muestreo.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idMuestra", nullable = false)
     private Muestra muestra;
 
@@ -29,13 +36,17 @@ public class Muestreo {
     private String ubicacion;
 
     @Column(name = "fechaEstimada")
-    private Date fechaEstimada;
+    private LocalDate fechaEstimada;
 
     @Column(name = "cantidadMinima")
     private Integer cantidadMinima;
 
-    @Column(name = "unidad")
-    private Integer unidad;
+    /**
+     * Relación con la unidad de determinación.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "unidad")
+    private AbmUnidadDeterminacion unidad;
 
     @Column(name = "muestreadores", length = 255)
     private String muestreadores;
@@ -48,5 +59,4 @@ public class Muestreo {
 
     @Column(name = "precioMuestreo")
     private Integer precioMuestreo;
-
 }

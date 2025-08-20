@@ -173,4 +173,10 @@ public class Presupuesto {
     
     @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Muestra> muestras = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CondicionesPublicacion> condicionesPublicacion = new ArrayList<>();
+
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CondicionFacturacion> condicionesFacturacion = new ArrayList<>();
 }

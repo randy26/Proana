@@ -26,51 +26,58 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Muestra {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idMuestra")
-    private Integer idMuestra;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idMuestra")
+	private Integer idMuestra;
 
-    @ManyToOne
-    @JoinColumn(name = "idPresupuesto", nullable = false)
-    private Presupuesto presupuesto;
+	@ManyToOne
+	@JoinColumn(name = "idPresupuesto", nullable = false)
+	private Presupuesto presupuesto;
 
-    @Column(name = "titulo", length = 100)
-    private String titulo;
+	@Column(name = "titulo", length = 100)
+	private String titulo;
 
-    @ManyToOne
-    @JoinColumn(name = "idReferenciaNormativa", referencedColumnName = "idReferenciaNormativa")
-    private ReferenciaNormativa referenciaNormativa;
+	@ManyToOne
+	@JoinColumn(name = "idReferenciaNormativa", referencedColumnName = "idReferenciaNormativa")
+	private ReferenciaNormativa referenciaNormativa;
 
-    @ManyToOne
-    @JoinColumn(name = "idMatriz", referencedColumnName = "idMatriz")
-    private Matriz matriz;
+	@ManyToOne
+	@JoinColumn(name = "idMatriz", referencedColumnName = "idMatriz")
+	private Matriz matriz;
 
-    @Column(name = "pe")
-    private Integer pe;
+	@Column(name = "pe")
+	private Integer pe;
 
-    @Column(name = "cantidadVeces")
-    private Integer cantidadVeces;
+	@Column(name = "cantidadVeces")
+	private Integer cantidadVeces;
 
-    @Column(name = "frecuencia")
-    private Integer frecuencia;
+	@Column(name = "frecuencia")
+	private Integer frecuencia;
 
-    @Column(name = "cantidadMuestras")
-    private Integer cantidadMuestras;
+	@Column(name = "cantidadMuestras")
+	private Integer cantidadMuestras;
 
-    @Column(name = "oos")
-    private Boolean oos;
+	@Column(name = "oos")
+	private Boolean oos;
 
-    @Column(name = "roos")
-    private Boolean roos;
+	@Column(name = "roos")
+	private Boolean roos;
 
-    @Column(name = "sCrudos")
-    private Boolean sCrudos;
+	@Column(name = "sCrudos")
+	private Boolean sCrudos;
 
-    @ManyToOne
-    @JoinColumn(name = "idEstadoMuestra", referencedColumnName = "idEstadoMuestra")
-    private EstadoMuestra estadoMuestra;
-    // 🔗 Relación con determinaciones (una muestra tiene muchas determinaciones)
-    @OneToMany(mappedBy = "muestra", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Determinacion> determinaciones = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "idEstadoMuestra", referencedColumnName = "idEstadoMuestra")
+	private EstadoMuestra estadoMuestra;
+	// 🔗 Relación con determinaciones (una muestra tiene muchas determinaciones)
+	@OneToMany(mappedBy = "muestra", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Determinacion> determinaciones = new ArrayList<>();
+
+	// 🔗 Relación con paquetes (una muestra tiene muchos paquetes)
+	@OneToMany(mappedBy = "muestra", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Paquete> paquetes = new ArrayList<>();
+	// 🔗 Relación con muestreos (una muestra tiene muchos muestreos)
+	@OneToMany(mappedBy = "muestra", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Muestreo> muestreos = new ArrayList<>();
 }

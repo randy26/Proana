@@ -1,7 +1,8 @@
 package com.proana.dto;
 
-import lombok.Data;
 import java.util.List;
+
+import lombok.Data;
 
 @Data
 public class ItemDTO {
@@ -18,4 +19,6 @@ public class ItemDTO {
     private boolean sCrudos;
     private String paquete;
     private List<DeterminacionDTO> determinaciones;
+    private List<PaqueteDTO> paquetes;
+    private List<MuestreoDTO> muestreos;
 }

@@ -37,12 +37,12 @@ public class MuestreoServiceImpl implements MuestreoService {
         try {
             logger.info("Inicio de la obtención de muestreos");
             List<Muestreo> entidades = this.muestreoRep.findAll();
-            List<MuestreoDTO> dtos = entidades.stream()
+            List<MuestreoDTO> dtos = null; /*entidades.stream()
                     .map(ent -> new MuestreoDTO(ent.getIdMuestreo(), mapearItem(ent.getMuestra()),
                             ent.getUbicacion(), ent.getFechaEstimada(), ent.getCantidadMinima(),
                             ent.getUnidad(), ent.getMuestreadores(), ent.getTiempoTotal(),
                             ent.getConsumibles(), ent.getPrecioMuestreo()))
-                    .toList();
+                    .toList();*/
             logger.info("Se obtuvieron {} Muestreos", dtos.size());
             return dtos;
         } catch (Exception e) {

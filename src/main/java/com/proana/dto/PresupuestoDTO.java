@@ -31,7 +31,8 @@ import lombok.Data;
 	    private ContactoDTO contacto;
 	    private List<ItemDTO> items;
 	    private List<ViajeDTO> viajes;
-	    private FacturacionDTO facturacion;
+	    private CondicionFacturacionDTO condicionFacturacion;
+	    private CondicionesPublicacionDTO condicionesPublicacion;
 
 }
 

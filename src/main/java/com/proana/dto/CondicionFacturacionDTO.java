@@ -1,7 +1,6 @@
 package com.proana.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,19 +21,19 @@ public class CondicionFacturacionDTO implements Serializable {
 
 	private Boolean autoIngresaronEntre = false;
 
-	private LocalDate fechaInicioIngreso;
+	private String fechaInicioIngreso;
 
-	private LocalDate fechaFinIngreso;
+	private String fechaFinIngreso;
 
 	private Boolean autoTerminadasEntre = false;
 
-	private LocalDate fechaInicioTerminada;
+	private String fechaInicioTerminada;
 
-	private LocalDate fechaFinTerminada;
+	private String fechaFinTerminada;
 
-	private Boolean manual = false;
+	private String manual;
 
-	private Boolean muestraAMuestra = false;
+	private String muestraAMuestra;
 
 	// Solo el ID del presupuesto relacionado
 	private Integer idPresupuesto;

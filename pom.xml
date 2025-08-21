@@ -14,7 +14,7 @@
     <groupId>com.proana</groupId>
     <artifactId>Proana</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>Proana</name>
     <description>Proyecto Proana con seguridad, JWT, JPA y MapStruct</description>

@@ -179,4 +179,6 @@ public class Presupuesto {
 
     @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CondicionFacturacion> condicionesFacturacion = new ArrayList<>();
+    @Column(name = "motivo")
+    private String motivo;
 }

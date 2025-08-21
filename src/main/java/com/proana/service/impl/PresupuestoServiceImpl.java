@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proana.dto.ClienteDto;
+import com.proana.dto.CondicionFacturacionDTO;
+import com.proana.dto.CondicionesPublicacionDTO;
 import com.proana.dto.ContactoDTO;
 import com.proana.dto.DerivanteDTO;
 import com.proana.dto.DeterminacionDTO;
@@ -134,12 +136,13 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		presupuesto.setContacto(mapContacto(dto.getContacto()));
 
 		EstadoPresupuesto estado = new EstadoPresupuesto();
-		if (dto.getFacturacion().isModo()) {
+		if (dto.isModo()) {
 			estado.setIdEstadoPresupuesto(2);
 		} else {
 			estado.setIdEstadoPresupuesto(1);
 		}
 		presupuesto.setEstadoPresupuesto(estado);
+		presupuesto.setMotivo(dto.getMotivo());
 		// Mapear viajes
 		presupuesto.setViajes(mapViajes(dto.getViajes(), presupuesto));
 		// Mapear muestras
@@ -161,13 +164,19 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 	        CondicionFacturacion cf = new CondicionFacturacion();
 	        cf.setAutoUltimaMuestra(dto.getCondicionFacturacion().getAutoUltimaMuestra());
 	        cf.setAutoIngresaronEntre(dto.getCondicionFacturacion().getAutoIngresaronEntre());
-	        cf.setFechaInicioIngreso(dto.getCondicionFacturacion().getFechaInicioIngreso());
-	        cf.setFechaFinIngreso(dto.getCondicionFacturacion().getFechaFinIngreso());
+	        cf.setFechaInicioIngreso(ProanaUtil.parseDateSql(dto.getCondicionFacturacion().getFechaInicioIngreso()));
+	        cf.setFechaFinIngreso(ProanaUtil.parseDateSql(dto.getCondicionFacturacion().getFechaFinIngreso()));
 	        cf.setAutoTerminadasEntre(dto.getCondicionFacturacion().getAutoTerminadasEntre());
-	        cf.setFechaInicioTerminada(dto.getCondicionFacturacion().getFechaInicioTerminada());
-	        cf.setFechaFinTerminada(dto.getCondicionFacturacion().getFechaFinTerminada());
-	        cf.setManual(dto.getCondicionFacturacion().getManual());
-	        cf.setMuestraAMuestra(dto.getCondicionFacturacion().getMuestraAMuestra());
+	        cf.setFechaInicioTerminada(ProanaUtil.parseDateSql(dto.getCondicionFacturacion().getFechaInicioTerminada()));
+	        cf.setFechaFinTerminada(ProanaUtil.parseDateSql(dto.getCondicionFacturacion().getFechaFinTerminada()));
+        	if(dto.getCondicionFacturacion().getManual().equalsIgnoreCase("Manual"))
+        	{
+        		 cf.setManual(true);
+        	}else {
+        		cf.setMuestraAMuestra(true);
+        	}
+	       // cf.setManual(dto.getCondicionFacturacion().getManual());
+	        //cf.setMuestraAMuestra(dto.getCondicionFacturacion().getMuestraAMuestra());
 	        cf.setPresupuesto(presupuesto);
 	        presupuesto.setCondicionesFacturacion(List.of(cf));
 	    }
@@ -207,7 +216,7 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 		presupuesto.setContacto(mapContacto(dto.getContacto()));
 
 		EstadoPresupuesto estado = new EstadoPresupuesto();
-		if (dto.getFacturacion().isModo()) {
+		if (dto.isModo()) {
 			estado.setIdEstadoPresupuesto(1);
 		} else {
 			estado.setIdEstadoPresupuesto(2);
@@ -516,14 +525,60 @@ public class PresupuestoServiceImpl implements PresupuestoService {
 			dto.setContacto(contactoDto);
 		}
 
-		// Viajes
-		if (presupuesto.getViajes() != null) {
-			dto.setViajes(presupuesto.getViajes().stream().map(v -> {
-				ViajeDTO vDto = new ViajeDTO();
-				vDto.setId(v.getIdViaje());
-				// vDto.setDescripcion(v.get);
-				return vDto;
-			}).collect(Collectors.toList()));
+		if (presupuesto.getCondicionesPublicacion() != null && !presupuesto.getCondicionesPublicacion().isEmpty()) {
+		    List<CondicionesPublicacionDTO> publicacionDTOs = presupuesto.getCondicionesPublicacion()
+		        .stream()
+		        .map(cp -> CondicionesPublicacionDTO.builder()
+		                .idCondicionPublicacion(cp.getIdCondicionPublicacion())
+		                .idPresupuesto(cp.getPresupuesto() != null ? cp.getPresupuesto().getIdPresupuesto() : null)
+		                .autorizacionComercialPreviaDT(cp.getAutorizacionComercialPreviaDT() != null ? cp.getAutorizacionComercialPreviaDT() : false)
+		                .autorizacionComercial(cp.getAutorizacionComercial() != null ? cp.getAutorizacionComercial() : false)
+		                .automaticamenteFirmaDT(cp.getAutomaticamenteFirmaDT() != null ? cp.getAutomaticamenteFirmaDT() : false)
+		                .seInformaConReferencias(cp.getSeInformaConReferencias() != null ? cp.getSeInformaConReferencias() : false)
+		                .build()
+		        )
+		        .collect(Collectors.toList());
+
+		    dto.setCondicionesPublicacion(publicacionDTOs.get(0));
+		}
+		
+		if (presupuesto.getCondicionesFacturacion() != null && !presupuesto.getCondicionesFacturacion().isEmpty()) {
+		    CondicionFacturacion cf = presupuesto.getCondicionesFacturacion().get(0);
+
+		    CondicionFacturacionDTO cfDTO = CondicionFacturacionDTO.builder()
+		            .idCondicionFacturacion(cf.getIdCondicionFacturacion())
+		            .autoUltimaMuestra(cf.getAutoUltimaMuestra() != null ? cf.getAutoUltimaMuestra() : false)
+		            .autoIngresaronEntre(cf.getAutoIngresaronEntre() != null ? cf.getAutoIngresaronEntre() : false)
+		            .fechaInicioIngreso(cf.getFechaInicioIngreso() != null ? cf.getFechaInicioIngreso().toString() : null)
+		            .fechaFinIngreso(cf.getFechaFinIngreso() != null ? cf.getFechaFinIngreso().toString() : null)
+		            .autoTerminadasEntre(cf.getAutoTerminadasEntre() != null ? cf.getAutoTerminadasEntre() : false)
+		            .fechaInicioTerminada(cf.getFechaInicioTerminada() != null ? cf.getFechaInicioTerminada().toString() : null)
+		            .fechaFinTerminada(cf.getFechaFinTerminada() != null ? cf.getFechaFinTerminada().toString() : null)
+		            .manual(cf.getManual() != null && cf.getManual() ? "manual" : null)
+		            .muestraAMuestra(cf.getMuestraAMuestra() != null && cf.getMuestraAMuestra() ? "muestra_a_muestra" : null)
+		            .idPresupuesto(cf.getPresupuesto() != null ? cf.getPresupuesto().getIdPresupuesto() : null)
+		            .build();
+
+		    dto.setCondicionFacturacion(cfDTO);
+		}
+
+		
+		if (presupuesto.getViajes() != null && !presupuesto.getViajes().isEmpty()) {
+		    List<ViajeDTO> viajesDTO = presupuesto.getViajes().stream()
+		        .map(v -> {
+		            ViajeDTO viajeDto = new ViajeDTO();
+		            viajeDto.setId(v.getIdViaje() != null ? v.getIdViaje() : 0);
+		            viajeDto.setUbicacion(v.getUbicacion());
+		            viajeDto.setCostoViaticos(v.getCostoViaticoPorViaje() != null ? v.getCostoViaticoPorViaje().toString() : "0");
+		            viajeDto.setCantidadViajes(v.getCantidadViajes() != null ? v.getCantidadViajes().toString() : "0");
+		            viajeDto.setTrasladoKm(v.getTraslado() != null ? v.getTraslado().toString() : "0");
+		            viajeDto.setAlojamientoDias(v.getAlojamiento() != null ? v.getAlojamiento().toString() : "0");
+		            viajeDto.setViaticosUnidades(v.getViaticos() != null ? v.getViaticos().toString() : "0");
+		            return viajeDto;
+		        })
+		        .collect(Collectors.toList());
+
+		    dto.setViajes(viajesDTO); // dto es tu PresupuestoDTO principal
 		}
 
 		// Muestras -> Items

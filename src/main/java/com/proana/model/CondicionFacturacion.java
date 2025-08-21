@@ -1,7 +1,7 @@
 package com.proana.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,19 +39,19 @@ public class CondicionFacturacion implements Serializable {
 	private Boolean autoIngresaronEntre = false;
 
 	@Column(name = "Fecha_Inicio_Ingreso")
-	private LocalDate fechaInicioIngreso;
+	private Date fechaInicioIngreso;
 
 	@Column(name = "Fecha_Fin_Ingreso")
-	private LocalDate fechaFinIngreso;
+	private Date fechaFinIngreso;
 
 	@Column(name = "Auto_Terminadas_Entre", nullable = false)
 	private Boolean autoTerminadasEntre = false;
 
 	@Column(name = "Fecha_Inicio_Terminada")
-	private LocalDate fechaInicioTerminada;
+	private Date fechaInicioTerminada;
 
 	@Column(name = "Fecha_Fin_Terminada")
-	private LocalDate fechaFinTerminada;
+	private Date fechaFinTerminada;
 
 	@Column(name = "Manual", nullable = false)
 	private Boolean manual = false;

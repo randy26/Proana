@@ -33,6 +33,8 @@ import lombok.Data;
 	    private List<ViajeDTO> viajes;
 	    private CondicionFacturacionDTO condicionFacturacion;
 	    private CondicionesPublicacionDTO condicionesPublicacion;
+	    private String motivo;
+	    private boolean modo;
 
 }
 

@@ -1,7 +1,6 @@
 package com.proana.service.impl;
 
 import com.proana.dto.ItemDTO;
-import com.proana.dto.MonedaDto;
 import com.proana.dto.MuestreoDTO;
 import com.proana.model.Muestra;
 import com.proana.model.Muestreo;
@@ -37,12 +36,12 @@ public class MuestreoServiceImpl implements MuestreoService {
         try {
             logger.info("Inicio de la obtención de muestreos");
             List<Muestreo> entidades = this.muestreoRep.findAll();
-            List<MuestreoDTO> dtos = null; /*entidades.stream()
-                    .map(ent -> new MuestreoDTO(ent.getIdMuestreo(), mapearItem(ent.getMuestra()),
+            List<MuestreoDTO> dtos = entidades.stream()
+                    .map(ent -> new MuestreoDTO(ent.getIdMuestreo(), ent.getMuestra().getIdMuestra(),
                             ent.getUbicacion(), ent.getFechaEstimada(), ent.getCantidadMinima(),
-                            ent.getUnidad(), ent.getMuestreadores(), ent.getTiempoTotal(),
+                            ent.getUnidad().getIdUnidadDeterminacion(), ent.getMuestreadores(), ent.getTiempoTotal(),
                             ent.getConsumibles(), ent.getPrecioMuestreo()))
-                    .toList();*/
+                    .toList();
             logger.info("Se obtuvieron {} Muestreos", dtos.size());
             return dtos;
         } catch (Exception e) {
@@ -51,7 +50,7 @@ public class MuestreoServiceImpl implements MuestreoService {
         }
     }
 
-    public ItemDTO mapearItem(Muestra muestra) {
+    /*public ItemDTO mapearItem(Muestra muestra) {
 
         ItemDTO item = new ItemDTO();
         // Item
@@ -71,6 +70,6 @@ public class MuestreoServiceImpl implements MuestreoService {
         }
 
         return item;
-    }
+    }*/
 
 }

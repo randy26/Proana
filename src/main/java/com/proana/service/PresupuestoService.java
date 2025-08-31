@@ -3,11 +3,13 @@ package com.proana.service;
 import java.util.List;
 
 import com.proana.dto.PresupuestoDTO;
+import com.proana.dto.PresupuestoMuestraDTO;
 import com.proana.dto.PresupuestoResumenDTO;
 
 public interface PresupuestoService {
     List<PresupuestoResumenDTO> listarPresupuestos();
     void guardarPresupuesto(PresupuestoDTO dto);
     PresupuestoDTO obtenerPresupuestoPorId(Integer id);
-    void actualizarPresupuesto(Integer id, PresupuestoDTO data);
+    void actualizarPresupuesto(Integer id, PresupuestoDTO dto);
+    List<PresupuestoMuestraDTO> obtenerPresupuestosConClienteYMuestras();
 }

@@ -3,8 +3,10 @@ package com.proana.dto;
 import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class ItemDTO {
     private int id;
     private String titulo;
@@ -21,4 +23,13 @@ public class ItemDTO {
     private List<DeterminacionDTO> determinaciones;
     private List<PaqueteDTO> paquetes;
     private List<MuestreoDTO> muestreos;
+	public ItemDTO(int id, String titulo, int muestras, boolean oos) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.muestras = muestras;
+		this.oos = oos;
+	}
+    
+    
 }

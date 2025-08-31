@@ -1,6 +1,7 @@
 package com.proana.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -62,7 +65,7 @@ public class Presupuesto {
      * Fecha del presupuesto.
      */
     @Column(name = "fechaPresupuesto")
-    private Date fechaPresupuesto;
+    private LocalDate fechaPresupuesto;
 
     /**
      * validezDelPresupuesto del presupuesto.
@@ -168,16 +171,16 @@ public class Presupuesto {
     @JoinColumn(name = "idEstadoPresupuesto")
     private EstadoPresupuesto estadoPresupuesto;
     
-    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL)
     private List<Viaje> viajes = new ArrayList<>();
     
-    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL)
     private List<Muestra> muestras = new ArrayList<>();
     
-    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL)
     private List<CondicionesPublicacion> condicionesPublicacion = new ArrayList<>();
 
-    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL)
     private List<CondicionFacturacion> condicionesFacturacion = new ArrayList<>();
     @Column(name = "motivo")
     private String motivo;

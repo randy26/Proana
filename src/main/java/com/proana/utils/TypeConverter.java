@@ -129,18 +129,21 @@ public final class TypeConverter {
         if (obj instanceof java.sql.Date) {
             return new Date(((java.sql.Date) obj).getTime());
         }
+        if (obj instanceof java.time.LocalDate) {
+            return java.sql.Date.valueOf((java.time.LocalDate) obj);
+        }
         if (obj instanceof String) {
             try {
-             // formato "yyyy-MM-dd"
+                // formato "yyyy-MM-dd"
                 return java.sql.Date.valueOf((String) obj);
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException(
-                        "Formato de fecha inválido: " + obj);
+                    "Formato de fecha inválido: " + obj);
             }
         }
-        throw new IllegalArgumentException(
-                "No se puede convertir a Date: " + obj);
+        throw new IllegalArgumentException("No se puede convertir a Date: " + obj.getClass());
     }
+
     
     public static String toStringSafe(Object obj) {
         if (obj == null) return null;

@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.proana.dto.PresupuestoDTO;
+import com.proana.dto.PresupuestoMuestraDTO;
 import com.proana.dto.PresupuestoResumenDTO;
 import com.proana.service.PresupuestoService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/presupuestos")
@@ -82,13 +85,53 @@ public class PresupuestoController {
         }
     }
     
-   /* @PutMapping("/presupuestos/{id}")
-    public ResponseEntity<PresupuestoDTO> actualizarPresupuesto(
-            @PathVariable Long id,
-            @RequestBody PresupuestoDTO presupuestoDTO) {
-        PresupuestoDTO actualizado = service.actualizarPresupuesto(id, presupuestoDTO);
-        return ResponseEntity.ok(actualizado);*/
-    //}
+    @PutMapping("/{id}")
+    public ResponseEntity<String> actualizarPresupuesto(
+            @PathVariable Integer id,
+            @RequestBody PresupuestoDTO presupuesto) {
+        try {
+            logger.info("🔄 Actualizando presupuesto con id {}: {}", id, presupuesto);
+            service.actualizarPresupuesto(id, presupuesto);
+            return ResponseEntity.ok("Presupuesto actualizado correctamente.");
+        } catch (EntityNotFoundException e) {
+            logger.warn("Presupuesto con id {} no encontrado", id, e);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body("Presupuesto no encontrado.");
+        } catch (IllegalArgumentException e) {
+            logger.error("Error de validación al actualizar presupuesto con id {}", id, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                 .body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error interno al actualizar presupuesto con id {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Ocurrió un error al actualizar el presupuesto.");
+        }
+    }
+    
+    /**
+     * Endpoint que devuelve la lista de presupuestos con cliente y muestras.
+     *
+     * @return Lista de {@link PresupuestoMuestraDTO}
+     */
+    @GetMapping("/presupuestos-muestras")
+    public ResponseEntity<List<PresupuestoMuestraDTO>> getPresupuestosConMuestras() {
+        try {
+            logger.info("🚀 Consultando presupuestos con cliente y muestras...");
+            List<PresupuestoMuestraDTO> resultados = service.obtenerPresupuestosConClienteYMuestras();
 
+            logger.info("✅ Se obtuvieron {} registros de presupuestos con muestras", 
+                        resultados != null ? resultados.size() : 0);
+
+            return ResponseEntity.ok(resultados);
+
+        } catch (Exception e) {
+            logger.error("❌ Error al obtener presupuestos con cliente y muestras", e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Ocurrió un error al obtener los presupuestos con muestras.",
+                    e
+            );
+        }
+    }
     
 }

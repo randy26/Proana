@@ -1,6 +1,7 @@
 package com.proana.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,5 +39,13 @@ public class DeterminacionDTO implements Serializable {
 	private Boolean datosCrudos;
 	private Integer idFti;
 	private Integer idEstadoDeterminacion;
+	public DeterminacionDTO(int idDeterminacionPresupuesto, String especificacion, String limite, Boolean informa, Float dtoCantidad) {
+		super();
+		this.idDeterminacionPresupuesto = idDeterminacionPresupuesto;
+		this.especificacion = especificacion;
+		this.limite = limite;
+		this.informa = informa;
+		this.dtoCantidad = dtoCantidad;
+	}
 
 }

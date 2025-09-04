@@ -57,6 +57,8 @@ import com.proana.utils.TypeConverter;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
+
 /**
  * Implementación del servicio para operaciones sobre Presupuestos.
  */
@@ -665,7 +667,10 @@ public class PresupuestoServiceImpl implements PresupuestoService {
                         .idPresupuesto(p.getIdPresupuesto())
                         .cliente(p.getCliente().getRazonSocial())
                         .muestras(p.getMuestras().stream()
-                                  .map(item -> new ItemDTO(item.getIdMuestra(), item.getTitulo(), item.getCantidadMuestras(), item.getOos()))
+                                  .map(item -> new ItemDTO(item.getIdMuestra(), item.getTitulo(), item.getCantidadMuestras(),
+										  item.getOos(), item.getDeterminaciones().stream()
+										  .map(d -> new DeterminacionDTO(d.getIdDeterminacionPresupuesto(), d.getEspecificacion(),
+												  d.getLimite(), d.getInforma(), d.getDtoCantidad() )).collect(Collectors.toList())  ))
                                   .collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());

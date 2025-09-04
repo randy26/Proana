@@ -32,7 +32,8 @@ public interface PresupuestoRepository extends JpaRepository<Presupuesto, Intege
 		
 		@Query("SELECT DISTINCT p FROM Presupuesto p " +
 			       "JOIN FETCH p.cliente c " +
-			       "LEFT JOIN FETCH p.muestras m")
+			       "LEFT JOIN FETCH p.muestras m " +
+				   "LEFT JOIN m.determinaciones d ")
 			List<Presupuesto> findPresupuestosConClienteYMuestras();
 
 }

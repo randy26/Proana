@@ -23,12 +23,13 @@ public class ItemDTO {
     private List<DeterminacionDTO> determinaciones;
     private List<PaqueteDTO> paquetes;
     private List<MuestreoDTO> muestreos;
-	public ItemDTO(int id, String titulo, int muestras, boolean oos) {
+	public ItemDTO(int id, String titulo, int muestras, boolean oos, List<DeterminacionDTO> determinaciones) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.muestras = muestras;
 		this.oos = oos;
+        this.determinaciones = determinaciones;
 	}
     
     

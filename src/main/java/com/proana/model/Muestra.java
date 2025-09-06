@@ -80,4 +80,7 @@ public class Muestra {
 	// 🔗 Relación con muestreos (una muestra tiene muchos muestreos)
 	@OneToMany(mappedBy = "muestra", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Muestreo> muestreos = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "id_Ubicacion", referencedColumnName = "id_Ubicacion", nullable = true)
+	private AbmUbicaciones ubicacion;
 }

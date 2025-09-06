@@ -668,7 +668,8 @@ public class PresupuestoServiceImpl implements PresupuestoService {
                         .cliente(p.getCliente().getRazonSocial())
                         .muestras(p.getMuestras().stream()
                                   .map(item -> new ItemDTO(item.getIdMuestra(), item.getTitulo(), item.getCantidadMuestras(),
-										  item.getOos(), item.getDeterminaciones().stream()
+										  item.getOos(), item.getUbicacion().getId_Ubicacion(), item.getUbicacion().getNombre(),
+										  item.getDeterminaciones().stream()
 										  .map(d -> new DeterminacionDTO(d.getIdDeterminacionPresupuesto(), d.getEspecificacion(),
 												  d.getLimite(), d.getInforma(), d.getDtoCantidad() )).collect(Collectors.toList())  ))
                                   .collect(Collectors.toList()))
